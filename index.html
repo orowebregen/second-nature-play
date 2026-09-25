@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/play/second-nature/favicon.svg" />
+    <title>Second Nature</title>
+    <meta name="description" content="A storm-wrecked valley habitat diorama: what you do across eight seasons decides what it becomes." />
+    <meta property="og:title" content="Second Nature" />
+    <meta property="og:description" content="A storm-wrecked valley habitat diorama: what you do across eight seasons decides what it becomes." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Second Nature" />
+    <meta name="twitter:description" content="A storm-wrecked valley habitat diorama: what you do across eight seasons decides what it becomes." />
+    <meta name="twitter:image" content="./og.jpg" />
+    <style>
+      :root { color-scheme: dark; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 100%; height: 100%; overflow: hidden; background: #0a0a08;
+        /* Mobile browser chrome, in four lines. `overscroll-behavior` kills
+           pull-to-refresh, which otherwise reloads the game whenever a thumb
+           drags downward; the other three stop a long press from selecting
+           text, flashing a grey tap highlight, or opening a callout menu over
+           the game. */
+        overscroll-behavior: none;
+        -webkit-user-select: none; user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+      }
+      /* The canvas is sized by CSS and read back by Engine.resize(); never set
+         width/height attributes on it directly or DPR handling breaks.
+         `100dvh` before `100vh` matters on phones: `100vh` on iOS Safari means
+         the viewport WITHOUT the URL bar, so the bottom of the game sits under
+         browser chrome until the user scrolls — which they cannot, because the
+         page does not scroll. `dvh` tracks the visible height. */
+      #game { display: block; width: 100vw; height: 100vh; height: 100dvh; touch-action: none; }
+      /* Safe-area padding keeps the sheet and cards clear of the notch and the
+         iOS home indicator. It needs `viewport-fit=cover` above to be non-zero. */
+      #ui {
+        position: fixed; inset: 0; pointer-events: none;
+        padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+                 env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+      }
+    </style>
+    <script type="module" crossorigin src="/play/second-nature/assets/index-CKP4MooL.js"></script>
+  </head>
+  <body>
+    <!--
+      THESIS: a storm-wrecked valley as a museum habitat model on a table you lean
+      over; it refuses the dashboard, the HUD and the top-down city grid.
+      OWN-WORLD: painted-plaster ground with visible brush grain, flocked wire trees,
+      a resin river with real refraction, tiny figures with felt-like matte finish;
+      palette of wet earth, slate water, bone plaster and one warm lamplight in
+      windows; type on the paper at the table's edge, a workhorse humanist sans for
+      OBSERVED, a restrained script or hand-set italic for HEARD.
+      STORY: the visitor understands that the table is alive, believes that it
+      remembers them, and types.
+      FIRST VIEWPORT: the whole table, brown river left to right, boarded lodge
+      upper right, village centre, a bus idling at the road; the intervention sheet
+      is a strip of paper along the bottom edge (desktop right edge); one line of
+      OBSERVED text; nothing else.
+      FORM: habitat diorama, first on the ranked list, seed key printed by
+      concept-seed.mjs when the surface roll is spent on the sheet's composition.
+      FINISH: ship when batched inspection (desktop + mobile) and the finish review
+      pass; report the disposition word at its scope; the documenter writes
+      DESIGN.md from the built world.
+    -->
+    <canvas id="game"></canvas>
+    <div id="ui"></div>
+  </body>
+</html>
