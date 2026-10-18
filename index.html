@@ -35,6 +35,7 @@
          the viewport WITHOUT the URL bar, so the bottom of the game sits under
          browser chrome until the user scrolls — which they cannot, because the
          page does not scroll. `dvh` tracks the visible height. */
+      html.sn-paper, html.sn-paper body { background: #f6f0dc; }
       #game { display: block; width: 100vw; height: 100vh; height: 100dvh; touch-action: none; }
       /* Safe-area padding keeps the sheet and cards clear of the notch and the
          iOS home indicator. It needs `viewport-fit=cover` above to be non-zero. */
@@ -44,7 +45,11 @@
                  env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
       }
     </style>
-    <script type="module" crossorigin src="./assets/index-DPcYBF9V.js"></script>
+    <script>
+      /* A crossing the player started (a close-up, or back on foot) shows the game's paper from the first paint, not black. */
+      try { if (/[?&]level=/.test(location.search) || (localStorage.getItem('sn:frontier') && sessionStorage.getItem('sn:where') !== 'freeplay')) document.documentElement.classList.add('sn-paper'); } catch (e) { /* storage refused: black, as before */ }
+    </script>
+    <script type="module" crossorigin src="./assets/index-WoPasVXg.js"></script>
   </head>
   <body>
     <!--
