@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>Second Nature</title>
+    <meta name="description" content="Follow the water through a living island. Explore, try a plan, and return to the places you helped change." />
+    <meta property="og:title" content="Second Nature" />
+    <meta property="og:description" content="Follow the water through a living island. Explore, try a plan, and return to the places you helped change." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Second Nature" />
+    <meta name="twitter:description" content="Follow the water through a living island. Explore, try a plan, and return to the places you helped change." />
+    <meta name="twitter:image" content="./og.jpg" />
+    <style>
+      :root { color-scheme: dark; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 100%; height: 100%; overflow: hidden; background: #0a0a08;
+        /* Mobile browser chrome, in four lines. `overscroll-behavior` kills
+           pull-to-refresh, which otherwise reloads the game whenever a thumb
+           drags downward; the other three stop a long press from selecting
+           text, flashing a grey tap highlight, or opening a callout menu over
+           the game. */
+        overscroll-behavior: none;
+        -webkit-user-select: none; user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+      }
+      /* The canvas is sized by CSS and read back by Engine.resize(); never set
+         width/height attributes on it directly or DPR handling breaks.
+         `100dvh` before `100vh` matters on phones: `100vh` on iOS Safari means
+         the viewport WITHOUT the URL bar, so the bottom of the game sits under
+         browser chrome until the user scrolls — which they cannot, because the
+         page does not scroll. `dvh` tracks the visible height. */
+      html.sn-paper, html.sn-paper body { background: #f6f0dc; }
+      #game { display: block; width: 100vw; height: 100vh; height: 100dvh; touch-action: none; }
+      #boot-loading {
+        position: fixed; inset: 0; z-index: 100; display: flex;
+        flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 24px; text-align: center;
+        background: #0a0a08; color: #f2efe8; font: 15px/1.5 Georgia, serif;
+      }
+      #boot-reload { min-height: 44px; padding: 10px 22px; border: 0; border-radius: 6px; background: #3b6b26; color: white; font: bold 16px Arial, sans-serif; cursor: pointer; }
+      #boot-loading strong { font-size: 28px; font-weight: 400; letter-spacing: .02em; }
+      html.sn-paper #boot-loading { background: #f6f0dc; color: #2a2620; }
+      /* Safe-area padding keeps the sheet and cards clear of the notch and the
+         iOS home indicator. It needs `viewport-fit=cover` above to be non-zero. */
+      #ui {
+        position: fixed; inset: 0; pointer-events: none;
+        padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+                 env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+      }
+    </style>
+    <script>
+      /* A crossing the player started (a close-up, or back on foot) shows the game's paper from the first paint, not black. */
+      try { if (/[?&]level=/.test(location.search) || (localStorage.getItem('sn:frontier') && sessionStorage.getItem('sn:where') !== 'freeplay')) document.documentElement.classList.add('sn-paper'); } catch (e) { /* storage refused: black, as before */ }
+    </script>
+    <script type="module" crossorigin src="./assets/index-DBkC1m8_.js"></script>
+  </head>
+  <body>
+    <!--
+      THESIS: a storm-wrecked valley as a museum habitat model on a table you lean
+      over; it refuses the dashboard, the HUD and the top-down city grid.
+      OWN-WORLD: painted-plaster ground with visible brush grain, flocked wire trees,
+      a resin river with real refraction, tiny figures with felt-like matte finish;
+      palette of wet earth, slate water, bone plaster and one warm lamplight in
+      windows; type on the paper at the table's edge, a workhorse humanist sans for
+      OBSERVED, a restrained script or hand-set italic for HEARD.
+      STORY: the visitor understands that the table is alive, believes that it
+      remembers them, and types.
+      FIRST VIEWPORT: the whole table, brown river left to right, boarded lodge
+      upper right, village centre, a bus idling at the road; the intervention sheet
+      is a strip of paper along the bottom edge (desktop right edge); one line of
+      OBSERVED text; nothing else.
+      FORM: habitat diorama, first on the ranked list, seed key printed by
+      concept-seed.mjs when the surface roll is spent on the sheet's composition.
+      FINISH: ship when batched inspection (desktop + mobile) and the finish review
+      pass; report the disposition word at its scope; the documenter writes
+      DESIGN.md from the built world.
+    -->
+    <div id="boot-loading" role="status" aria-live="polite">
+      <strong>Second Nature</strong><span id="boot-message">Opening the island…</span>
+      <button id="boot-reload" hidden onclick="location.reload()">Reload</button>
+      <noscript><style>#boot-message { display: none; }</style><span>This game needs JavaScript. Enable it in your browser, then reload.</span></noscript>
+    </div>
+    <canvas id="game"></canvas>
+    <div id="ui"></div>
+    <script>
+      // Listen before Vite's module entry; its HTML transform rebuilds that tag.
+      addEventListener('error', event => {
+        if (event.target?.tagName !== 'SCRIPT' || event.target.type !== 'module') return;
+        const message = document.getElementById('boot-message');
+        if (message) {
+          message.textContent = 'This page could not open. Reload to try again.';
+          document.getElementById('boot-reload').hidden = false;
+        }
+      }, true);
+    </script>
+  </body>
+</html>
